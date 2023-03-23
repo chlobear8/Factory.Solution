@@ -3,6 +3,7 @@
 }
 
 @model Factory.Models.Engineer
+@using Factory.Models
 
 <h1>Engineer Details</h1>
 
@@ -10,7 +11,7 @@
 
 <h2>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h2>
 
-@if (Model.Machines.Count == 0)
+@if (Model.JoinEntities.Count == 0)
 {
   <h3>No machines have been assigned to this engineer yet.</h3>
 }
@@ -18,9 +19,13 @@ else
 {
   <h3>Machines:</h3>
   <ul>
-    @foreach (Machine machine in Model.Machines)
+    @foreach (Assignment join in Model.JoinEntities)
     {
       <li>@Html.ActionLink($"{machine.Name}", "Details", "Machines", new { id = machine.MachineId })</li>
+      @using (Html.BeginForm("DeleteJoin", "Engineers"))
+      {
+        @Html.Hidden("joinId", @join.AssignmentId)
+      }
     }
   </ul>
 }

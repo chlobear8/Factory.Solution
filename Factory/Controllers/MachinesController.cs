@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Factory.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Factory.Controllers
 {
@@ -17,7 +19,7 @@ namespace Factory.Controllers
     public ActionResult Index()
     {
       List<Machine> model = _db.Machines
-                                .Include(machine => machine.Engineer)
+                                // .Include(machine => machine.Engineer)
                                 .ToList();
       return View(model);
     }

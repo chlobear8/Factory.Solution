@@ -8,5 +8,6 @@ namespace Factory.Models
     public int EngineerId { get; set; }
     public Machine Machine { get; set; }
     public int MachineId { get; set; }
+    public List<Assignment> JoinEntities { get; }
   }
 }
