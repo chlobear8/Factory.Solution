@@ -3,12 +3,28 @@
 }
 
 @model Factory.Models.Machine
+@using Factory.Models
 
 <h1>Machine Details</h1>
 
 <hr />
 
 <h2>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h2>
+
+@if (Model.Engineers.Count == 0)
+{
+  <h3>No engineers have been assigned to this machine yet.</h3>
+}
+else
+{
+  <h3>Engineers:</h3>
+  <ul>
+    @foreach (Engineer engineer in Model.Engineers)
+    {
+      <li>@Html.ActionLink($"{engineer.Name}", "Details", "Engineers", new { id = engineer.EngineerId })</li>
+    }
+  </ul>
+}
 
 <p>@Html.ActionLink("Edit machine", "Edit", new { id = Model.MachineId })</p>
 <p>@Html.ActionLink("Delete machine", "Delete", new { id = Model.MachineId })</p>
