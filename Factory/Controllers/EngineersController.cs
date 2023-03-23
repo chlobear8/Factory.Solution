@@ -44,7 +44,7 @@ namespace Factory.Controllers
 
     public ActionResult Edit(int id)
     {
-      Engineer thisEngineer = _db.Engineer.FirstOrDefault(engineer => engineer.EngineerId == id);
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }
 
@@ -58,7 +58,7 @@ namespace Factory.Controllers
 
     public ActionResult Delete(int id)
     {
-      Engineer thisEngineer = _db.Engineer.FirstOrDefault(engineer => engineer.EngineerId == id);
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
       ViewBag.field = "Name";
       ViewBag.name = thisEngineer.Name;
       return View(thisEngineer);
