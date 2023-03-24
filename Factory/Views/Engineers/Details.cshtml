@@ -11,7 +11,7 @@
 
 <h2>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h2>
 
-@if (Model.JoinEntities.Count == 0)
+@if(@Model.JoinEntities.Count == 0)
 {
   <h3>No machines have been assigned to this engineer yet.</h3>
 }
@@ -21,17 +21,18 @@ else
   <ul>
     @foreach (Assignment join in Model.JoinEntities)
     {
-      <li>Assignments: @join.MachineId</li>
+      <li>@join.Machine.Name</li>
 
-      @using (Html.BeginForm("DeleteJoin", "Engineers"))
+      @using (Html.BeginForm("DeleteJoin", "Assingments"))
       {
-        @Html.Hidden("joinId", @join.AssignmentId)
-        <input type="submit" value="Delete"/>
+      @Html.Hidden("joinId", @join.AssignmentId)
+      <input type="submit" value="Delete"/>
       }
     }
   </ul>
 }
 
+<p>@Html.ActionLink("Add an engineer", "Create")
 <p>@Html.ActionLink("Edit engineer", "Edit", new { id = Model.EngineerId })</p>
 <p>@Html.ActionLink("Delete engineer", "Delete", new { id = Model.EngineerId })</p>
 <p>@Html.ActionLink("Back to engineer list", "Index")</p>
