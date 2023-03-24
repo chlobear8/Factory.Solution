@@ -53,7 +53,7 @@ namespace Factory.Controllers
     [HttpPost]
     public ActionResult Edit(Engineer engineer)
     {
-      _db.Engineer.Update(engineer);
+      _db.Engineers.Update(engineer);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
