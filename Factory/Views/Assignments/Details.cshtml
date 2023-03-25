@@ -1,0 +1,55 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Factory.Models
+@model Factory.Models.Assignment
+
+<h1>Assignment Details</h1>
+
+<hr />
+
+<h2>@Html.DisplayNameFor(model => model.Title): @Html.DisplayFor(model => model.Title)</h2>
+
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>This assignment does not belong to any machines or engineers.</p>
+}
+else
+{
+  <h3>Machines the assignment belongs to:</h3>
+  <ul>
+  @foreach(Assignment join in Model.JoinEntities)
+  {
+    <li>@join.Machine.Name</li>
+    @using (Html.BeginForm("DeleteJoin", "Assignments"))
+    {
+      @Html.Hidden("joinId", @join.AssignmentId)
+      <input type="submit" value="Delete"/>
+    }
+  }
+  </ul>
+}
+else
+{
+  <h3>Engineers the assignment belongs to:</h3>
+  <ul>
+  @foreach(Assignment join in Model.JoinEntities)
+  {
+    <li>@join.Engineer.Name</li>
+    @using (Html.BeginForm("DeleteJoin", "Assignments"))
+    {
+      @Html.Hidden("joinId", @join.AssignmentId)
+      <input type="submit" value="Delete"/>
+    }
+  }
+  </ul>
+}
+
+
+
+<p>@Html.ActionLink("Edit Assignment", "Edit", new { id = Model.AssignmentId })</p>
+<p>@Html.ActionLink("Delete Assignment", "Delete", new { id = Model.AssignmentId })</p>
+<p>@Html.ActionLink("Add a machine", "AddMachine", new { id = Model.AssignmentId })</p>
+<p>@Html.ActionLink("Add an engineer", "AddEngineer", new { id = Model.AssignmentId })</p>
+<p>@Html.ActionLink("Back to list", "Index")</p>

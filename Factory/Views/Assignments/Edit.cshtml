@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Factory.Models.Assignment
+
+<h2>Edit</h2>
+
+<h4>Edit this assignment: @Html.DisplayFor(model => model.Assignment)</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.AssignmentId)
+
+    @Html.LabelFor(model => model.Assignment)
+    @Html.EditorFor(model => model.Assignment)
+
+    <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>

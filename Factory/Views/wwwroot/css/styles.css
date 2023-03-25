@@ -87,19 +87,7 @@ div#footer {
   border: none;
 }
 
-.button {
-  display: inline-block;
-  background-color: rgb(8, 63, 25);
-  border-radius: 4px;
-  padding: 6px;
-  margin-top: 4px;
-  color: rgb(8, 6, 6);
-  text-decoration: none;
-  cursor: pointer;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-.button:hover {
+.btn-primary:hover {
   text-decoration: none;
   color: inherit;
   background-color: #e58406;
