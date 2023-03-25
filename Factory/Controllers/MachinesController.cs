@@ -76,5 +76,35 @@ namespace Factory.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult AddAssignment(int id)
+    {
+      Machine thisMachine = _db.Machines.FirstOrDefault(machines => machines.MachineId == id);
+      ViewBag.AssignmentId = new SelectList(_db.Assignments, "AssignmentId");
+      return View(thisMachine);
+    }
+
+    [HttpPost]
+    public ActionResult AddAssignment(Machine machine, int assignmentId)
+    {
+      #nullable enable
+      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.AssignmentId == assignmentId && join.MachineId == machine.MachineId));
+      #nullable disable
+      if (joinEntity == null && assignmentId != 0)
+      {
+        _db.Assignments.Add(new Assignment() { AssignmentId = assignmentId, MachineId = machine.MachineId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = machine.MachineId });
+    } 
+
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      Assignment joinEntry = _db.Assignments.FirstOrDefault(entry => entry.AssignmentId == joinId);
+      _db.Assignments.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    } 
   }
 }

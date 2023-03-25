@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Factory.Models.Assignment
+@using Factory.Models
+
+<h4>Add a new assignment</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Engineer)
+    @Html.TextBoxFor(model => model.Engineer)
+
+    @Html.LabelFor(model => model.Machine)
+    @Html.TextBoxFor(model => model.Machine)
+
+    <input type="submit" value="Add new assignment" class="btn btn-primary" />
+}
+
+<p>@Html.ActionLink("Show all assignments", "Index")</p>

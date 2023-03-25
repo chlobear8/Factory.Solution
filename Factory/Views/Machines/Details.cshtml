@@ -4,7 +4,6 @@
 
 @model Factory.Models.Machine
 @using Factory.Models
-@using System.Collections.Generic
 
 <h1>Machine Details</h1>
 
@@ -33,7 +32,7 @@ else
   </ul>
 }
 
-<p>@Html.ActionLink("Add an assignment", "NewAssignment", new { id = Model.MachineId} )</p>
+<p>@Html.ActionLink("Add an assignment", "AddAssignment", new { id = Model.MachineId} )</p>
 <p>@Html.ActionLink("Add a machine", "Create")
 <p>@Html.ActionLink("Edit machine", "Edit", new { id = Model.MachineId })</p>
 <p>@Html.ActionLink("Delete machine", "Delete", new { id = Model.MachineId })</p>
