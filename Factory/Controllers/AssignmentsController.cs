@@ -55,11 +55,32 @@ namespace Factory.Controllers
     public ActionResult AddMachine(Assignment assignment, int MachineId)
     {
       #nullable enable
-      Assignment? joinEntity = _db.Assignment.FirstOrDefault(join => (join.MachineId == machineId && join.AssignmentId == assignment.AssignmentId));
+      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.MachineId == machineId && join.AssignmentId == assignment.AssignmentId));
       #nullable disable
       if (joinEntity == null && MachineId != 0)
       {
         _db.Assignment.Add(new Assignment() { MachineId = machineId, AssignmentId = assignment.AssignmentId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = assignment.AssignmentId });
+    }
+
+    public ActionResult AddEngineer(int id)
+    {
+      Assignment thisAssignment = _db.Assignments.FirstOrDefault(assignments => assignments.AssignmentId == id);
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+      return View(thisAssignment);
+    }
+
+    [HttpPost]
+    public ActionResult AddEngineer(Assignment assignment, int EngineerId)
+    {
+      #nullable enable
+      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.EngineerId == engineerId && join.AssignmentId == assignment.AssignmentId));
+      #nullable disable
+      if (joinEntity == null && EngineerId != 0)
+      {
+        _db.Assignment.Add(new Assignment() { EngineerId = engineerId, AssignmentId = assignment.AssignmentId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = assignment.AssignmentId });
