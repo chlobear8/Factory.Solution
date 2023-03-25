@@ -24,9 +24,8 @@ namespace Factory.Controllers
     public ActionResult Details(int id)
     {
       Assignment thisAssignment = _db.Assignments
-          .Include(assignment => assignment.JoinEntities)
-          .ThenInclude(join => join.Engineer)
-          .ThenInclude(join => join.Machine)
+          .Include(assignment => assignment.Machine)
+          .Include(assignment => assignment.Engineer)
           .FirstOrDefault(assignment => assignment.AssignmentId == id);
       return View(thisAssignment);
     }
@@ -52,14 +51,14 @@ namespace Factory.Controllers
     }
 
     [HttpPost]
-    public ActionResult AddMachine(Assignment assignment, int MachineId)
+    public ActionResult AddMachine(Assignment assignment, int machineId)
     {
       #nullable enable
       Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.MachineId == machineId && join.AssignmentId == assignment.AssignmentId));
       #nullable disable
-      if (joinEntity == null && MachineId != 0)
+      if (joinEntity == null && machineId != 0)
       {
-        _db.Assignment.Add(new Assignment() { MachineId = machineId, AssignmentId = assignment.AssignmentId });
+        _db.Assignments.Add(new Assignment() { MachineId = machineId, AssignmentId = assignment.AssignmentId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = assignment.AssignmentId });
@@ -73,14 +72,14 @@ namespace Factory.Controllers
     }
 
     [HttpPost]
-    public ActionResult AddEngineer(Assignment assignment, int EngineerId)
+    public ActionResult AddEngineer(Assignment assignment, int engineerId)
     {
       #nullable enable
       Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.EngineerId == engineerId && join.AssignmentId == assignment.AssignmentId));
       #nullable disable
-      if (joinEntity == null && EngineerId != 0)
+      if (joinEntity == null && engineerId != 0)
       {
-        _db.Assignment.Add(new Assignment() { EngineerId = engineerId, AssignmentId = assignment.AssignmentId });
+        _db.Assignments.Add(new Assignment() { EngineerId = engineerId, AssignmentId = assignment.AssignmentId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = assignment.AssignmentId });
@@ -120,8 +119,8 @@ namespace Factory.Controllers
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {
-      Assignment joinEntry = _db.Assignment.FirstOrDefault(entry => entry.AssignmentId == joinId);
-      _db.Assignment.Remove(joinEntry);
+      Assignment joinEntry = _db.Assignments.FirstOrDefault(entry => entry.AssignmentId == joinId);
+      _db.Assignments.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

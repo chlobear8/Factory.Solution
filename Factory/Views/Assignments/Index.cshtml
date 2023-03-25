@@ -13,7 +13,7 @@
 
 @foreach (Assignment assignment in Model)
 {
-  <li>@Html.ActionLink($"{assignment.Assignment}", "Details", new { id = assignment.AssignmentId })</li>
+  <li>@Html.ActionLink($"{assignment.AssignmentId}", "Details", new { id = assignment.AssignmentId })</li>
 }
 
 <p>@Html.ActionLink("Add new assignment", "Create")</p>

@@ -3,10 +3,11 @@
 }
 
 @model Factory.Models.Assignment
+@using Factory.Models
 
 <h2>Add an engineer</h2>
 
-<h4>Add an engineer to this assignment: @Html.DisplayFor(model => model.Name)</h4>
+<h4>Add an engineer to this assignment: @Html.DisplayFor(model => model.AssignmentId)</h4>
 
 @using (Html.BeginForm())
 {
