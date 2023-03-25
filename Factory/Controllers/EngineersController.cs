@@ -74,5 +74,26 @@ namespace Factory.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult AddAssignment(int id)
+    {
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineers => engineers.EngineerId == id);
+      ViewBag.AssignmentId = new SelectList(_db.Assignments, "AssignmentId", "Name");
+      return View(thisEngineer);
+    }
+
+    [HttpPost]
+    public ActionResult AddAssignment(Engineer engineer, int assignmentId)
+    {
+      #nullable enable
+      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.AssignmentId == assignmentId && join.EngineerId == engineer.EngineerId));
+      #nullable disable
+      if (joinEntity == null && assignmentId != 0)
+      {
+        _db.Assignments.Add(new Assignment() { AssignmentId = assignmentId, EngineerId = engineer.EngineerId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = engineer.EngineerId });
+    }  
   }
 }
