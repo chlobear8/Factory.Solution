@@ -78,7 +78,7 @@ namespace Factory.Controllers
     public ActionResult AddAssignment(int id)
     {
       Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineers => engineers.EngineerId == id);
-      ViewBag.AssignmentId = new SelectList(_db.Assignments, "AssignmentId");
+      ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "Name");
       return View(thisEngineer);
     }
 

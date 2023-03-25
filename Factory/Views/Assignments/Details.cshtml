@@ -1,4 +1,4 @@
-<!-- @{
+@{
   Layout = "_Layout";
 }
 
@@ -11,7 +11,7 @@
 
 <h2>@Html.DisplayNameFor(model => model.AssignmentId): @Html.DisplayFor(model => model.AssignmentId)</h2>
 
-@if(@Model.Machines.Count == 0)
+@if(@Model.Machine == null)
 {
   <p>This assignment does not belong to any machines.</p>
 }
@@ -19,19 +19,18 @@ else
 {
   <h3>Machines the assignment belongs to:</h3>
   <ul>
-  @foreach(Assignment join in Model.JoinEntities)
   {
-    <li>@join.Machine.Name</li>
+    <li>@Model.Machine.Name</li>
     @using (Html.BeginForm("DeleteJoin", "Assignments"))
     {
-      @Html.Hidden("joinId", @join.AssignmentId)
+      @Html.Hidden("joinId", @Model.AssignmentId)
       <input type="submit" value="Delete"/>
     }
   }
   </ul>
 }
 
-@if(@Model.Engineers.Count == 0)
+@if(@Model.Engineer == null)
 {
   <p>This assignment does not belong to any engineers.</p>
 }
@@ -39,12 +38,11 @@ else
 {
   <h3>Engineers the assignment belongs to:</h3>
   <ul>
-  @foreach(Assignment join in Model.JoinEntities)
   {
-    <li>@join.Engineer.Name</li>
+    <li>@Model.Engineer.Name</li>
     @using (Html.BeginForm("DeleteJoin", "Assignments"))
     {
-      @Html.Hidden("joinId", @join.AssignmentId)
+      @Html.Hidden("joinId", @Model.AssignmentId)
       <input type="submit" value="Delete"/>
     }
   }
@@ -57,4 +55,4 @@ else
 <p>@Html.ActionLink("Delete Assignment", "Delete", new { id = Model.AssignmentId })</p>
 <p>@Html.ActionLink("Add a machine", "AddMachine", new { id = Model.AssignmentId })</p>
 <p>@Html.ActionLink("Add an engineer", "AddEngineer", new { id = Model.AssignmentId })</p>
-<p>@Html.ActionLink("Back to list", "Index")</p> -->
+<p>@Html.ActionLink("Back to list", "Index")</p>
