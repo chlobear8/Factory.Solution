@@ -9,6 +9,7 @@ body {
   font-size: 14px;
   color: #eeeeee;
   background-color: #102526;
+  background-image: conic-gradient(rgb(42, 42, 68), rgb(58, 56, 56));
 }
 
 nav {
@@ -91,11 +92,4 @@ div#footer {
   text-decoration: none;
   color: inherit;
   background-color: #e58406;
-}
-
-#factory {
-  display: flex;
-  object-fit: contain;
-  width: 600px;
-  float: right;
 }
