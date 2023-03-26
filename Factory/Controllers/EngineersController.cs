@@ -40,6 +40,7 @@ namespace Factory.Controllers
     {
       Engineer thisEngineer = _db.Engineers
                                   .Include(engineer => engineer.JoinEntities)
+                                  .ThenInclude(join => join.Machine)
                                   .FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }
@@ -83,14 +84,14 @@ namespace Factory.Controllers
     }
 
     [HttpPost]
-    public ActionResult AddAssignment(Engineer engineer, int assignmentId)
+    public ActionResult AddAssignment(Engineer engineer, int machineId)
     {
       #nullable enable
-      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.AssignmentId == assignmentId && join.EngineerId == engineer.EngineerId));
+      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.MachineId == machineId && join.EngineerId == engineer.EngineerId));
       #nullable disable
-      if (joinEntity == null && assignmentId != 0)
+      if (joinEntity == null && machineId != 0)
       {
-        _db.Assignments.Add(new Assignment() { AssignmentId = assignmentId, EngineerId = engineer.EngineerId });
+        _db.Assignments.Add(new Assignment() { MachineId = machineId, EngineerId = engineer.EngineerId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = engineer.EngineerId });

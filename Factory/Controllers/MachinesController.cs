@@ -18,9 +18,7 @@ namespace Factory.Controllers
 
     public ActionResult Index()
     {
-      List<Machine> model = _db.Machines
-                                // .Include(machine => machine.Engineer)
-                                .ToList();
+      List<Machine> model = _db.Machines.ToList();
       return View(model);
     }
 
@@ -38,13 +36,15 @@ namespace Factory.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult Details(int id)
+  public ActionResult Details(int id)
     {
       Machine thisMachine = _db.Machines
-                                .Include(machine => machine.JoinEntities)
-                                .FirstOrDefault(machine => machine.MachineId == id);
+                                  .Include(machine => machine.JoinEntities)
+                                  .ThenInclude(join => join.Engineer)
+                                  .FirstOrDefault(machine => machine.MachineId == id);
       return View(thisMachine);
     }
+
 
     public ActionResult Edit(int id)
     {
@@ -80,19 +80,19 @@ namespace Factory.Controllers
     public ActionResult AddAssignment(int id)
     {
       Machine thisMachine = _db.Machines.FirstOrDefault(machines => machines.MachineId == id);
-      ViewBag.AssignmentId = new SelectList(_db.Assignments, "AssignmentId");
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
       return View(thisMachine);
     }
 
     [HttpPost]
-    public ActionResult AddAssignment(Machine machine, int assignmentId)
+    public ActionResult AddAssignment(Machine machine, int engineerId)
     {
       #nullable enable
-      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.AssignmentId == assignmentId && join.MachineId == machine.MachineId));
+      Assignment? joinEntity = _db.Assignments.FirstOrDefault(join => (join.EngineerId == engineerId && join.MachineId == machine.MachineId));
       #nullable disable
-      if (joinEntity == null && assignmentId != 0)
+      if (joinEntity == null && engineerId != 0)
       {
-        _db.Assignments.Add(new Assignment() { AssignmentId = assignmentId, MachineId = machine.MachineId });
+        _db.Assignments.Add(new Assignment() { EngineerId = engineerId, MachineId = machine.MachineId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = machine.MachineId });
